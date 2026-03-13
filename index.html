@@ -1,10 +1,611 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <title>My DevOps Portfolio</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vikas Chava | Portfolio</title>
+
+  <style>
+    :root{
+      --bg:#0b1220;
+      --text:#e5e7eb;
+      --muted:#a7b0c0;
+      --accent:#7c3aed;
+      --accent2:#a855f7;
+      --shadow: 0 16px 40px rgba(0,0,0,.35);
+      --radius: 22px;
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      --max: 1180px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:var(--font);
+      color:var(--text);
+      background:
+        radial-gradient(900px 600px at 15% 10%, rgba(124,58,237,.25), transparent 60%),
+        radial-gradient(900px 600px at 85% 15%, rgba(168,85,247,.18), transparent 60%),
+        var(--bg);
+    }
+    a{color:inherit; text-decoration:none}
+
+    .container{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:34px 18px 90px;
+    }
+
+    /* mini nav */
+    .nav{
+      display:flex;
+      justify-content:flex-end;
+      gap:10px;
+      margin-bottom:18px;
+      flex-wrap:wrap;
+    }
+    .nav a{
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      font-size:13px;
+      color: var(--muted);
+    }
+    .nav a:hover{
+      border-color: rgba(124,58,237,.55);
+      color: var(--text);
+    }
+
+    /* Top split section */
+    .top{
+      display:grid;
+      grid-template-columns: 420px 1fr;
+      gap:52px;
+      align-items:center;
+      min-height: 70vh;
+    }
+
+    /* Left panel (profile) */
+    .left{
+      background: linear-gradient(180deg, rgba(17,24,39,.92), rgba(15,23,42,.92));
+      border:1px solid rgba(255,255,255,.08);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding:26px;
+      text-align:center;
+    }
+
+    /* UPDATED: show full image (no crop) */
+    .photo{
+      width:100%;
+      display:flex;
+      justify-content:center;
+      margin-bottom:16px;
+    }
+    .photo img{
+      width:100%;
+      max-width:320px;
+      height:auto;                 /* full image */
+      object-fit:contain;          /* no crop */
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow: 0 12px 30px rgba(0,0,0,.35);
+      background: rgba(255,255,255,.02);
+    }
+
+    .name{
+      margin:10px 0 6px;
+      font-size:22px;
+      font-weight:750;
+      letter-spacing:.2px;
+    }
+    .role{margin:0; color:var(--muted)}
+    .loc{margin:6px 0 0; color:var(--muted)}
+
+    /* UPDATED: icon buttons with SVG */
+    .iconrow{
+      display:flex;
+      justify-content:center;
+      gap:14px;
+      margin:18px 0 18px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .iconbtn{
+      width:42px; height:42px;
+      border-radius:14px;
+      display:grid;
+      place-items:center;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      transition: transform .15s ease, border-color .15s ease, background .15s ease;
+    }
+    .iconbtn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(124,58,237,.55);
+      background: rgba(255,255,255,.06);
+    }
+    .iconbtn svg{
+      width:20px; height:20px;
+      fill: currentColor;
+      color: white;
+      opacity: .92;
+    }
+
+    .primaryBtn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      width: 100%;
+      padding:12px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(124,58,237,.55);
+      background: linear-gradient(90deg, rgba(124,58,237,.22), rgba(168,85,247,.18));
+      color: var(--text);
+      cursor:pointer;
+      font-weight:700;
+      transition: transform .15s ease, background .15s ease;
+    }
+    .primaryBtn:hover{
+      transform: translateY(-1px);
+      background: linear-gradient(90deg, rgba(124,58,237,.32), rgba(168,85,247,.26));
+    }
+
+    /* Right hero */
+    .hero{
+      padding: 10px 6px;
+    }
+    .hero h1{
+      margin:0;
+      font-size:56px;
+      letter-spacing:-.6px;
+      line-height:1.05;
+    }
+    .hero .accent{
+      color: var(--accent2);
+    }
+    .hero p{
+      margin:18px 0 0;
+      max-width: 720px;
+      color: var(--muted);
+      line-height:1.7;
+      font-size:16px;
+    }
+
+    /* Sections */
+    .section{
+      margin-top: 70px;
+      scroll-margin-top: 24px;
+    }
+    .section h2{
+      margin:0 0 18px;
+      font-size:38px;
+      letter-spacing:-.4px;
+    }
+
+    .exp{
+      display:grid;
+      gap:14px;
+    }
+    .expCard{
+      background: rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      border-left: 5px solid rgba(168,85,247,.8);
+      border-radius: 18px;
+      padding:18px;
+      box-shadow: 0 10px 26px rgba(0,0,0,.25);
+    }
+    .expTitle{
+      margin:0;
+      font-size:16px;
+      font-weight:800;
+    }
+    .expMeta{
+      margin:6px 0 0;
+      color: var(--muted);
+      font-size:13px;
+    }
+    .tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:12px;
+    }
+    .tag{
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+    }
+
+    details{margin-top:12px}
+    summary{
+      list-style:none;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 10px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      font-weight:700;
+      user-select:none;
+    }
+    summary::-webkit-details-marker{display:none}
+    ul{
+      margin:10px 0 0 18px;
+      color: var(--muted);
+      line-height:1.7;
+    }
+
+    .twoCol{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+    }
+    .box{
+      background: rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius: 18px;
+      padding:18px;
+      box-shadow: 0 10px 26px rgba(0,0,0,.22);
+    }
+    .box h3{
+      margin:0 0 12px;
+      font-size:16px;
+    }
+    .note{
+      color: var(--muted);
+      line-height:1.7;
+      margin:0;
+      font-size:14px;
+    }
+
+    /* Modal */
+    .overlay{
+      position:fixed; inset:0;
+      background:rgba(0,0,0,.6);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      z-index:50;
+    }
+    .modal{
+      width:min(640px, 100%);
+      border-radius: 22px;
+      background: rgba(17,24,39,.92);
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow: var(--shadow);
+      padding:18px;
+    }
+    .modalHead{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:12px;
+    }
+    .xbtn{
+      width:40px; height:40px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      cursor:pointer;
+    }
+    .modalGrid{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-top:14px;
+      align-items:flex-start;
+    }
+    .qr{
+      width:180px; height:180px;
+      object-fit:cover;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+    }
+    .links{
+      flex:1;
+      min-width:240px;
+    }
+    .linkPills{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:10px;
+    }
+    .pillLink{
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      font-size:13px;
+    }
+    .actionsRow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:14px;
+    }
+    .ghostBtn{
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      width:auto;
+      padding:12px 16px;
+    }
+
+    @media (max-width: 980px){
+      .top{grid-template-columns: 1fr; gap:22px; min-height:auto}
+      .hero h1{font-size:40px; text-align:center}
+      .hero p{margin-left:auto; margin-right:auto; text-align:center}
+      .left{max-width:520px; margin:0 auto}
+      .twoCol{grid-template-columns:1fr}
+      .nav{justify-content:center}
+    }
+  </style>
 </head>
+
 <body>
-    <h1>Hello, Cloud World!</h1>
-    <p>This resume was deployed automatically using Harness CI/CD and Azure.</p>
+  <div class="container">
+    <nav class="nav">
+      <a href="#experience">Experience</a>
+      <a href="#education">Education</a>
+      <a href="#skills">Skills</a>
+    </nav>
+
+    <div class="top">
+      <!-- LEFT: Profile -->
+      <aside class="left">
+        <div class="photo">
+          <img src="/profile.jpeg" alt="Vikas Chava" />
+        </div>
+
+        <div class="name">Vikas Chava</div>
+        <p class="role">Software Engineer</p>
+        <p class="loc">Dallas, TX</p>
+
+        <!-- UPDATED ICONS -->
+        <div class="iconrow">
+          <!-- GitHub -->
+          <a class="iconbtn" href="https://github.com/vikas17ch" target="_blank" rel="noreferrer" title="GitHub" aria-label="GitHub">
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
+              0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52
+              -.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2
+              -3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82
+              .64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08
+              2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48
+              0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+            </svg>
+          </a>
+
+          <!-- LinkedIn -->
+          <a class="iconbtn" href="https://www.linkedin.com/in/vikas-chava-710992331" target="_blank" rel="noreferrer" title="LinkedIn" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20.447 20.452H17.21v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.01V9h3.084v1.561h.044c.43-.814 1.48-1.673 3.045-1.673 3.257 0 3.862 2.144 3.862 4.932v6.632zM5.337 7.433A1.79 1.79 0 1 1 5.34 3.85a1.79 1.79 0 0 1-.003 3.583zM6.956 20.452H3.716V9h3.24v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.727v20.545C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.273V1.727C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+          </a>
+
+          <!-- Email -->
+          <a class="iconbtn" href="mailto:vikaschava1712@gmail.com" title="Email" aria-label="Email">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
+            </svg>
+          </a>
+        </div>
+
+        <button class="primaryBtn" id="connectBtn">Let’s Connect</button>
+      </aside>
+
+      <!-- RIGHT: Hero -->
+      <section class="hero">
+        <h1>Hello, I’m <span class="accent">Vikas</span> 👋</h1>
+        <p>
+          Site Reliability and DevOps Engineer with strong experience building scalable cloud infrastructure,
+          automating operations, and improving production reliability across AWS, Azure, and Kubernetes environments.
+          Focused on performance, observability, and resilient system design.
+        </p>
+      </section>
+    </div>
+
+    <!-- EXPERIENCE -->
+    <section class="section" id="experience">
+      <h2>Experience</h2>
+
+      <div class="exp">
+        <div class="expCard">
+          <p class="expTitle">Site Reliability / DevOps Engineer</p>
+          <div class="expMeta">TikTok · Jan 2024 — Present</div>
+          <p class="note" style="margin-top:10px">
+            Built internal reliability platforms, handled high-severity incidents, improved monitoring and alerting,
+            and automated on-call workflows to increase system stability and reduce operational overhead.
+          </p>
+          <div class="tags">
+            <span class="tag">Kubernetes</span><span class="tag">Python</span><span class="tag">Grafana</span>
+            <span class="tag">Prometheus</span><span class="tag">Linux</span><span class="tag">Incident Response</span>
+            <span class="tag">Observability</span>
+          </div>
+          <details>
+            <summary>More</summary>
+            <ul>
+              <li>Improved monitoring coverage and alert quality to reduce noise and speed up triage.</li>
+              <li>Automated on-call and operational workflows to reduce manual overhead and improve consistency.</li>
+              <li>Drove reliability improvements by partnering with engineers on root-cause fixes.</li>
+            </ul>
+          </details>
+        </div>
+
+        <div class="expCard">
+          <p class="expTitle">DevOps Engineer</p>
+          <div class="expMeta">Magtech · Jun 2023 — Dec 2023</div>
+          <p class="note" style="margin-top:10px">
+            Migrated applications to Azure, built CI/CD pipelines, containerized services,
+            and automated deployments and infrastructure tasks.
+          </p>
+          <div class="tags">
+            <span class="tag">Azure</span><span class="tag">Jenkins</span><span class="tag">Docker</span>
+            <span class="tag">Kubernetes</span><span class="tag">Python</span><span class="tag">Git</span>
+            <span class="tag">Networking</span>
+          </div>
+          <details>
+            <summary>More</summary>
+            <ul>
+              <li>Built CI/CD pipelines and deployment automation for repeatable releases.</li>
+              <li>Containerized services and standardized runtime configs for easier operations.</li>
+            </ul>
+          </details>
+        </div>
+
+        <div class="expCard">
+          <p class="expTitle">Site Reliability Engineer</p>
+          <div class="expMeta">Mindtree · Aug 2021 — Apr 2022</div>
+          <p class="note" style="margin-top:10px">
+            Monitored production systems, investigated performance issues, supported incident response,
+            and helped maintain system reliability for customer-facing services.
+          </p>
+          <div class="tags">
+            <span class="tag">Linux</span><span class="tag">Kubernetes</span><span class="tag">Monitoring</span>
+            <span class="tag">Logs</span><span class="tag">Incident Support</span>
+          </div>
+        </div>
+
+        <div class="expCard">
+          <p class="expTitle">DevOps Engineer</p>
+          <div class="expMeta">Varsity Management · Jan 2021 — Aug 2021</div>
+          <p class="note" style="margin-top:10px">
+            Built deployment pipelines, containerized applications, and troubleshot system and network issues
+            across cloud environments.
+          </p>
+          <div class="tags">
+            <span class="tag">Docker</span><span class="tag">Jenkins</span><span class="tag">GitHub Actions</span>
+            <span class="tag">Linux</span><span class="tag">Cloud</span><span class="tag">Networking</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EDUCATION + SKILLS -->
+    <section class="section" id="education">
+      <h2>Education & Skills</h2>
+
+      <div class="twoCol">
+        <div class="box">
+          <h3>Education</h3>
+          <p class="note">
+            <b>Texas A&M University–Kingsville</b><br/>
+            M.S. in Computer Science · May 2023<br/>
+            Kingsville, Texas
+          </p>
+          <p class="note" style="margin-top:12px">
+            <b>SASTRA University</b><br/>
+            B.Tech in Computer Science · May 2021<br/>
+            Thanjavur, India
+          </p>
+        </div>
+
+        <div class="box" id="skills">
+          <h3>Skills / Tools</h3>
+          <div class="tags">
+            <span class="tag">Kubernetes</span>
+            <span class="tag">Terraform</span>
+            <span class="tag">Docker</span>
+            <span class="tag">Linux</span>
+            <span class="tag">Python</span>
+            <span class="tag">AWS</span>
+            <span class="tag">Azure</span>
+            <span class="tag">CI/CD</span>
+            <span class="tag">Jenkins</span>
+            <span class="tag">GitHub Actions</span>
+            <span class="tag">Git</span>
+            <span class="tag">Prometheus</span>
+            <span class="tag">Grafana</span>
+            <span class="tag">Observability</span>
+            <span class="tag">Oncall</span>
+            <span class="tag">Automation</span>
+            <span class="tag">Incident Response</span>
+            <span class="tag">Networking</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- CONNECT MODAL -->
+  <div class="overlay" id="overlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modalHead">
+        <div>
+          <h3 style="margin:0">Let’s Connect</h3>
+          <div style="color:var(--muted); margin-top:6px">Vikas Chava · Software Engineer · Dallas, TX</div>
+        </div>
+        <button class="xbtn" id="closeBtn" aria-label="Close">✕</button>
+      </div>
+
+      <div class="modalGrid">
+        <div>
+          <img class="qr" src="./qr.jpg" alt="QR" />
+          <div style="color:var(--muted); font-size:13px; margin-top:8px">Scan to connect quickly.</div>
+        </div>
+
+        <div class="links">
+          <div style="color:var(--muted); font-size:13px">Quick links</div>
+          <div class="linkPills">
+            <a class="pillLink" href="https://github.com/vikas17ch" target="_blank" rel="noreferrer">GitHub</a>
+            <a class="pillLink" href="https://www.linkedin.com/in/vikas-chava-710992331" target="_blank" rel="noreferrer">LinkedIn</a>
+            <a class="pillLink" href="mailto:vikaschava1712@gmail.com">Email</a>
+          </div>
+
+          <div class="actionsRow">
+            <a class="primaryBtn" id="downloadVcf" href="#" download="Vikas-Chava.vcf">Download Contact</a>
+            <button class="primaryBtn ghostBtn" id="doneBtn">Done</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // vCard generator
+    function makeVCard(){
+      const vcf = [
+        "BEGIN:VCARD",
+        "VERSION:3.0",
+        "FN:Vikas Chava",
+        "TITLE:Software Engineer",
+        "EMAIL;TYPE=INTERNET:vikaschava1712@gmail.com",
+        "URL:https://www.linkedin.com/in/vikas-chava-710992331",
+        "END:VCARD"
+      ].join("\\n");
+      return URL.createObjectURL(new Blob([vcf], {type:"text/vcard"}));
+    }
+    document.getElementById("downloadVcf").href = makeVCard();
+
+    // Modal controls
+    const overlay = document.getElementById("overlay");
+    const openBtn = document.getElementById("connectBtn");
+    const closeBtn = document.getElementById("closeBtn");
+    const doneBtn = document.getElementById("doneBtn");
+
+    function openModal(){
+      overlay.style.display = "flex";
+      overlay.setAttribute("aria-hidden","false");
+    }
+    function closeModal(){
+      overlay.style.display = "none";
+      overlay.setAttribute("aria-hidden","true");
+    }
+    openBtn.addEventListener("click", openModal);
+    closeBtn.addEventListener("click", closeModal);
+    doneBtn.addEventListener("click", closeModal);
+    overlay.addEventListener("click", (e) => { if(e.target === overlay) closeModal(); });
+    document.addEventListener("keydown", (e) => { if(e.key === "Escape") closeModal(); });
+  </script>
 </body>
-</html>git 
+</html>
